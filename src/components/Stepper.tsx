@@ -1,3 +1,5 @@
+import { Check } from 'lucide-react';
+
 interface StepperProps {
   steps: string[];
   currentStep: number;
@@ -19,19 +21,27 @@ export function Stepper({ steps, currentStep }: StepperProps) {
             >
               <div className="flex items-center">
                 <span
-                  className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold ${
+                  className={`flex h-8 w-8 items-center justify-center rounded-full text-sm font-semibold transition-colors duration-200 ${
                     isActive
-                      ? 'bg-blue-600 text-white'
+                      ? 'bg-[var(--color-primary)] text-[var(--color-on-primary)] shadow-[var(--shadow-sm)]'
                       : isComplete
-                        ? 'bg-blue-100 text-blue-700'
-                        : 'bg-slate-100 text-slate-400'
+                        ? 'bg-[var(--color-info-bg)] text-[var(--color-primary)] ring-1 ring-[var(--color-info-border)]'
+                        : 'bg-[var(--color-muted)] text-[var(--color-muted-foreground)]'
                   }`}
                 >
-                  {isComplete ? '✓' : stepNum}
+                  {isComplete ? (
+                    <Check className="h-4 w-4" aria-hidden="true" />
+                  ) : (
+                    stepNum
+                  )}
                 </span>
                 <span
-                  className={`ml-2 text-sm font-medium ${
-                    isActive ? 'text-blue-700' : isComplete ? 'text-slate-700' : 'text-slate-400'
+                  className={`ml-2 text-sm font-medium transition-colors duration-200 ${
+                    isActive
+                      ? 'text-[var(--color-primary)]'
+                      : isComplete
+                        ? 'text-[var(--color-foreground)]'
+                        : 'text-[var(--color-muted-foreground)]'
                   }`}
                 >
                   {step}
@@ -39,7 +49,9 @@ export function Stepper({ steps, currentStep }: StepperProps) {
               </div>
               {index < steps.length - 1 && (
                 <div
-                  className={`mx-4 h-0.5 flex-1 ${isComplete ? 'bg-blue-200' : 'bg-slate-200'}`}
+                  className={`mx-4 h-0.5 flex-1 transition-colors duration-200 ${
+                    isComplete ? 'bg-[var(--color-info-border)]' : 'bg-[var(--color-border)]'
+                  }`}
                 />
               )}
             </li>

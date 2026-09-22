@@ -28,10 +28,8 @@ export function Dashboard() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <h1 className="text-2xl font-semibold text-slate-900">
-        Welcome back, Alex
-      </h1>
-      <p className="mt-1 text-slate-500">
+      <h1 className="page-title">Welcome back, Alex</h1>
+      <p className="page-subtitle">
         Here&apos;s an overview of your catalog and pending work.
       </p>
 
@@ -41,31 +39,37 @@ export function Dashboard() {
             key={label}
             type="button"
             onClick={() => navigate(to)}
-            className="group rounded-xl border border-slate-200 bg-white p-6 text-left shadow-sm transition-all hover:border-blue-200 hover:shadow-md"
+            className="kpi-card group"
           >
-            <Icon className="h-8 w-8 text-blue-600" />
-            <p className="mt-4 text-sm font-medium text-slate-500">{label}</p>
-            <p className="mt-1 text-2xl font-semibold text-slate-900">
+            <Icon
+              className="h-8 w-8 text-[var(--color-primary)] transition-colors duration-200 group-hover:text-[#1d4ed8]"
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+            <p className="mt-4 text-sm font-medium text-[var(--color-muted-foreground)]">
+              {label}
+            </p>
+            <p className="mt-1 text-2xl font-semibold tracking-tight text-[var(--color-foreground)]">
               {value}
             </p>
           </button>
         ))}
       </div>
 
-      <div className="mt-10 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        <h2 className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-          Recent Activity
-        </h2>
-        <ul className="mt-4 divide-y divide-slate-100">
-          {recentActivity.map((item) => (
-            <li
-              key={item}
-              className="py-3 text-sm text-slate-600 first:pt-0 last:pb-0"
-            >
-              {item}
-            </li>
-          ))}
-        </ul>
+      <div className="card mt-10">
+        <div className="card-body">
+          <h2 className="section-label">Recent Activity</h2>
+          <ul className="mt-4 divide-y divide-[var(--color-border)]">
+            {recentActivity.map((item) => (
+              <li
+                key={item}
+                className="py-3 text-sm text-[var(--color-muted-foreground)] first:pt-0 last:pb-0"
+              >
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

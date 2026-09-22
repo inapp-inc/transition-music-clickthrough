@@ -11,36 +11,34 @@ export function TitleDetailBefore() {
       <button
         type="button"
         onClick={() => navigate('/catalog')}
-        className="mb-4 inline-flex items-center gap-1 text-sm text-slate-500 hover:text-slate-700"
+        className="btn-ghost mb-4"
       >
-        <ArrowLeft className="h-4 w-4" />
+        <ArrowLeft className="h-4 w-4" aria-hidden="true" />
         Back to Catalog
       </button>
 
-      <div className="mb-6 flex items-start gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
-        <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-amber-600" />
-        <p className="text-sm text-amber-800">
+      <div className="alert-warning mb-6">
+        <AlertCircle className="mt-0.5 h-5 w-5 shrink-0 text-[var(--color-warning)]" aria-hidden="true" />
+        <p>
           This title is used in a new production and needs to be retitled per
           TMC&apos;s publishing rules.
         </p>
       </div>
 
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-slate-900">{data.title}</h1>
+        <h1 className="page-title">{data.title}</h1>
         <button
           type="button"
           onClick={() => navigate('/retitle/step-1')}
-          className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+          className="btn-primary"
         >
           Retitle This Track
         </button>
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
-            Title Metadata
-          </h2>
+        <div className="detail-card">
+          <h2 className="section-label mb-4">Title Metadata</h2>
           <dl className="space-y-3">
             {[
               ['Title', data.title],
@@ -49,47 +47,43 @@ export function TitleDetailBefore() {
               ['Prefix', data.prefix],
               ['Public Domain', data.publicDomain],
             ].map(([label, value]) => (
-              <div key={label} className="flex justify-between border-b border-slate-100 pb-2">
-                <dt className="text-sm text-slate-500">{label}</dt>
-                <dd className="text-sm font-medium text-slate-900">{value}</dd>
+              <div key={label} className="detail-row">
+                <dt className="text-sm text-[var(--color-muted-foreground)]">{label}</dt>
+                <dd className="text-sm font-medium text-[var(--color-foreground)]">{value}</dd>
               </div>
             ))}
           </dl>
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
-              Writers
-            </h2>
+          <div className="detail-card">
+            <h2 className="section-label mb-4">Writers</h2>
             {data.writers.map((w) => (
               <div
                 key={w.name}
-                className="flex items-center justify-between border-b border-slate-100 py-2 last:border-0"
+                className="flex items-center justify-between border-b border-[var(--color-border)] py-2 last:border-0"
               >
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-sm font-medium text-[var(--color-foreground)]">
                   {w.name}
                 </span>
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-[var(--color-muted-foreground)]">
                   {w.pro} · {w.share}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-slate-500">
-              Publishers
-            </h2>
+          <div className="detail-card">
+            <h2 className="section-label mb-4">Publishers</h2>
             {data.publishers.map((p) => (
               <div
                 key={p.name}
-                className="flex items-center justify-between border-b border-slate-100 py-2 last:border-0"
+                className="flex items-center justify-between border-b border-[var(--color-border)] py-2 last:border-0"
               >
-                <span className="text-sm font-medium text-slate-900">
+                <span className="text-sm font-medium text-[var(--color-foreground)]">
                   {p.name}
                 </span>
-                <span className="text-sm text-slate-500">
+                <span className="text-sm text-[var(--color-muted-foreground)]">
                   {p.pro} · {p.share}
                 </span>
               </div>

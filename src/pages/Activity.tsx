@@ -9,27 +9,23 @@ export function Activity() {
 
   return (
     <div>
-      <h1 className="mb-6 text-2xl font-semibold text-slate-900">Activity</h1>
+      <h1 className="page-title mb-6">Activity</h1>
 
       <div className="mb-4 flex flex-wrap gap-2">
         {['Production', 'Date range', 'Income Received: Yes', 'Income Received: No'].map(
           (chip) => (
-            <button
-              key={chip}
-              type="button"
-              className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 hover:border-slate-300"
-            >
+            <button key={chip} type="button" className="filter-chip">
               {chip}
             </button>
           ),
         )}
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200">
-          <thead className="bg-slate-50">
+      <div className="table-shell">
+        <table>
+          <thead>
             <tr>
-              <th className="w-10 px-4 py-3" />
+              <th className="w-10" />
               {[
                 'Title',
                 'Production',
@@ -38,55 +34,38 @@ export function Activity() {
                 'Duration',
                 'Income Received',
               ].map((col) => (
-                <th
-                  key={col}
-                  className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500"
-                >
-                  {col}
-                </th>
+                <th key={col}>{col}</th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody>
             {activityRows.map((row) => (
               <tr
                 key={`${row.title}-${row.production}`}
                 onClick={() => {
                   if (row.selectable) setSelected(row.title);
                 }}
-                className={`transition-colors ${
-                  row.selectable ? 'cursor-pointer hover:bg-blue-50/50' : ''
-                } ${selected === row.title ? 'bg-blue-50 ring-1 ring-inset ring-blue-200' : ''}`}
+                className={`${row.selectable ? 'table-row-interactive' : ''} ${
+                  selected === row.title ? 'table-row-selected' : ''
+                }`}
               >
-                <td className="px-4 py-3">
+                <td>
                   {row.selectable && (
                     <input
                       type="radio"
                       checked={selected === row.title}
                       onChange={() => setSelected(row.title)}
-                      className="h-4 w-4 text-blue-600"
+                      className="h-4 w-4 accent-[var(--color-primary)]"
                     />
                   )}
                 </td>
-                <td className="px-4 py-3 text-sm font-medium text-slate-900">
-                  {row.title}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.production}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.airDate}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.typeOfUse}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.duration}
-                </td>
-                <td className="px-4 py-3">
-                  <StatusPill
-                    status={row.incomeReceived ? 'Yes' : 'No'}
-                  />
+                <td className="font-medium text-[var(--color-foreground)]">{row.title}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.production}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.airDate}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.typeOfUse}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.duration}</td>
+                <td>
+                  <StatusPill status={row.incomeReceived ? 'Yes' : 'No'} />
                 </td>
               </tr>
             ))}
@@ -99,7 +78,7 @@ export function Activity() {
           type="button"
           onClick={() => navigate('/royalty/income')}
           disabled={!selected}
-          className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="btn-primary"
         >
           Calculate Royalty
         </button>

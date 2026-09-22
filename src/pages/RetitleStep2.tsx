@@ -12,62 +12,58 @@ export function RetitleStep2() {
   return (
     <div className="mx-auto max-w-5xl">
       <div className="mb-2 flex items-center gap-2">
-        <Sparkles className="h-5 w-5 text-blue-600" />
-        <h1 className="text-2xl font-semibold text-slate-900">
-          Rules Engine Preview
-        </h1>
+        <Sparkles className="h-5 w-5 text-[var(--color-primary)]" strokeWidth={1.75} aria-hidden="true" />
+        <h1 className="page-title">Rules Engine Preview</h1>
       </div>
-      <p className="mb-6 text-slate-500">
+      <p className="page-subtitle mb-6">
         Review the automatic transformations before applying
       </p>
 
       <Stepper steps={['Confirm', 'Rules Preview', 'Save']} currentStep={2} />
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 text-xs font-semibold uppercase tracking-wide text-slate-400">
-            Before
-          </h2>
+        <div className="panel-before">
+          <h2 className="section-label mb-4">Before</h2>
           <dl className="space-y-4">
             <div>
-              <dt className="text-xs text-slate-500">Prefix</dt>
-              <dd className="text-sm font-medium text-slate-900">—</dd>
+              <dt className="text-xs text-[var(--color-muted-foreground)]">Prefix</dt>
+              <dd className="text-sm font-medium text-[var(--color-muted-foreground)]">—</dd>
             </div>
             <div>
-              <dt className="text-xs text-slate-500">Writers</dt>
-              <dd className="text-sm font-medium text-slate-900">
+              <dt className="text-xs text-[var(--color-muted-foreground)]">Writers</dt>
+              <dd className="text-sm font-medium text-[var(--color-foreground)]">
                 James Murray (PRS) 100%
               </dd>
             </div>
             <div>
-              <dt className="text-xs text-slate-500">Publishers</dt>
-              <dd className="text-sm font-medium text-slate-900">
+              <dt className="text-xs text-[var(--color-muted-foreground)]">Publishers</dt>
+              <dd className="text-sm font-medium text-[var(--color-foreground)]">
                 Alibi Generator (ASCAP) 100%
               </dd>
             </div>
           </dl>
         </div>
 
-        <div className="after-panel-glow rounded-xl border-2 border-blue-200 bg-gradient-to-br from-blue-50/80 to-white p-6 shadow-sm">
+        <div className="panel-after after-panel-glow">
           <div className="mb-4 flex items-center justify-between">
-            <h2 className="text-xs font-semibold uppercase tracking-wide text-blue-600">
+            <h2 className="section-label text-[var(--color-success)]">
               After — Auto-generated
             </h2>
-            <Badge variant="primary">Rules Applied</Badge>
+            <Badge variant="success">Rules Applied</Badge>
           </div>
           <dl className="space-y-5">
             {retitleRulesAfter.map((item) => (
               <div key={item.field}>
-                <dt className="text-xs text-slate-500">{item.field}</dt>
-                <dd className="mt-1 text-sm font-medium text-slate-900">
+                <dt className="text-xs text-[var(--color-muted-foreground)]">{item.field}</dt>
+                <dd className="mt-1 text-sm font-medium text-[var(--color-foreground)]">
                   {item.value}
                   {item.unchanged && (
-                    <span className="ml-2 text-xs text-slate-400">
+                    <span className="ml-2 text-xs text-[var(--color-muted-foreground)]">
                       (unchanged)
                     </span>
                   )}
                 </dd>
-                <Badge variant="neutral" className="mt-1.5">
+                <Badge variant="primary" className="mt-1.5 max-w-full whitespace-normal">
                   {item.rule}
                 </Badge>
               </div>
@@ -79,17 +75,17 @@ export function RetitleStep2() {
       <button
         type="button"
         onClick={() => setRulesExpanded(!rulesExpanded)}
-        className="mt-4 flex w-full items-center justify-between rounded-lg border border-slate-200 bg-white px-4 py-3 text-sm font-medium text-slate-700 hover:bg-slate-50"
+        className="btn-secondary mt-4 w-full justify-between"
       >
         Why these rules?
         {rulesExpanded ? (
-          <ChevronUp className="h-4 w-4" />
+          <ChevronUp className="h-4 w-4" aria-hidden="true" />
         ) : (
-          <ChevronDown className="h-4 w-4" />
+          <ChevronDown className="h-4 w-4" aria-hidden="true" />
         )}
       </button>
       {rulesExpanded && (
-        <div className="mt-2 rounded-lg border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-600">
+        <div className="mt-2 rounded-lg border border-[var(--color-border)] bg-[var(--color-muted)] px-4 py-3 text-sm text-[var(--color-muted-foreground)]">
           <ul className="list-inside list-disc space-y-1">
             <li>
               Alibi library titles used in new productions receive the TMC ALIBI
@@ -115,14 +111,14 @@ export function RetitleStep2() {
         <button
           type="button"
           onClick={() => navigate('/retitle/step-1')}
-          className="rounded-lg border border-slate-300 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
+          className="btn-secondary"
         >
           Back
         </button>
         <button
           type="button"
           onClick={() => navigate('/retitle/step-3')}
-          className="rounded-lg bg-blue-600 px-5 py-2 text-sm font-semibold text-white hover:bg-blue-700"
+          className="btn-primary"
         >
           Apply & Continue
         </button>

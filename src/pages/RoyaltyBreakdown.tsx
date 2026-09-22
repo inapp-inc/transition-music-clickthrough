@@ -14,10 +14,10 @@ export function RoyaltyBreakdown() {
   const lines: {
     label: string;
     amount: string;
-    indent?: boolean;
     nested?: boolean;
     bold?: boolean;
     highlight?: boolean;
+    emphasis?: boolean;
   }[] = [
     { label: 'Gross Income (BMI Q4 2025)', amount: fmt(calc.grossIncome) },
     { label: 'Subtotal', amount: fmt(calc.subtotal) },
@@ -35,6 +35,7 @@ export function RoyaltyBreakdown() {
       label: `${calc.coPublisherA.name} — 60% of pool`,
       amount: fmt(calc.coPublisherA.amount),
       nested: true,
+      emphasis: true,
     },
     {
       label: `${calc.coPublisherB.name} — 40% of pool`,
@@ -46,56 +47,49 @@ export function RoyaltyBreakdown() {
   return (
     <div className="mx-auto max-w-2xl">
       <div className="mb-2 flex items-center gap-2">
-        <Calculator className="h-5 w-5 text-blue-600" />
-        <h1 className="text-2xl font-semibold text-slate-900">
-          Royalty Calculation Breakdown
-        </h1>
+        <Calculator className="h-5 w-5 text-[var(--color-primary)]" strokeWidth={1.75} aria-hidden="true" />
+        <h1 className="page-title">Royalty Calculation Breakdown</h1>
       </div>
-      <p className="mb-6 text-slate-500">
+      <p className="page-subtitle mb-6">
         Step-by-step calculation for Co-Publisher A statement
       </p>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <div className="border-b border-slate-200 bg-slate-50 px-5 py-3">
-          <p className="text-xs font-semibold uppercase tracking-wide text-slate-500">
-            Calculation Ledger
-          </p>
+      <div className="ledger-shell">
+        <div className="ledger-header">
+          <p className="section-label">Calculation Ledger</p>
         </div>
 
-        <div className="divide-y divide-slate-100 px-5">
+        <div>
           {lines.map((line) => (
             <div
               key={line.label}
-              className={`flex items-center justify-between py-3.5 ${
-                line.nested ? 'ml-6 border-l-2 border-blue-200 pl-4' : ''
-              } ${line.highlight ? 'bg-blue-50/50 -mx-5 px-5' : ''}`}
+              className={`ledger-row ${line.highlight ? 'ledger-row-highlight' : ''} ${line.nested ? 'ledger-row-nested' : ''}`}
             >
-              <div className="flex items-center gap-2">
-                {line.nested && (
-                  <span className="text-slate-300">├─</span>
-                )}
+              <div className="flex min-w-0 flex-1 items-center gap-2 pr-4">
                 <span
                   className={`text-sm ${
                     line.bold
-                      ? 'font-semibold text-slate-900'
+                      ? 'font-semibold text-[var(--color-foreground)]'
                       : line.nested
-                        ? 'text-slate-600'
-                        : 'text-slate-700'
+                        ? 'text-[var(--color-muted-foreground)]'
+                        : 'text-[var(--color-foreground)]'
                   }`}
                 >
                   {line.label}
                 </span>
                 {line.highlight && (
-                  <Badge variant="success">
+                  <Badge variant="success" className="hidden shrink-0 sm:inline-flex">
                     Matches TMC&apos;s own Multi-Writer Co-Publisher Income
                     Template
                   </Badge>
                 )}
               </div>
               <span
-                className={`font-mono text-sm tabular-nums ${
-                  line.bold ? 'font-semibold text-slate-900' : 'text-slate-700'
-                } ${line.nested && line.label.includes('Co-Publisher A') ? 'text-blue-700 font-semibold' : ''}`}
+                className={`tabular-amount shrink-0 text-sm ${
+                  line.bold || line.emphasis
+                    ? 'font-semibold text-[var(--color-foreground)]'
+                    : 'text-[var(--color-muted-foreground)]'
+                } ${line.emphasis ? 'text-[var(--color-primary)]' : ''}`}
               >
                 {line.amount}
               </span>
@@ -104,11 +98,20 @@ export function RoyaltyBreakdown() {
         </div>
       </div>
 
+      {lines.some((l) => l.highlight) && (
+        <p className="mt-3 text-xs text-[var(--color-muted-foreground)] sm:hidden">
+          <Badge variant="success" className="mr-1">
+            Verified
+          </Badge>
+          Matches TMC&apos;s own Multi-Writer Co-Publisher Income Template
+        </p>
+      )}
+
       <div className="mt-6 flex justify-end">
         <button
           type="button"
           onClick={() => navigate('/royalty/statement')}
-          className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white hover:bg-blue-700"
+          className="btn-primary"
         >
           Generate Statement
         </button>

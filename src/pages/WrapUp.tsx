@@ -24,25 +24,25 @@ export function WrapUp() {
 
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-2xl flex-col items-center justify-center text-center">
-      <h1 className="text-3xl font-semibold text-slate-900">
+      <h1 className="text-3xl font-semibold tracking-tight text-[var(--color-foreground)]">
         You just saw ARIA…
       </h1>
-      <p className="mt-2 text-slate-500">
+      <p className="mt-2 text-[var(--color-muted-foreground)]">
         Three capabilities that prove the ARIA Rebuild is ready for TMC.
       </p>
 
       <div className="mt-10 space-y-6 text-left">
         {recapItems.map((item, i) => (
           <div key={item.title} className="flex gap-4">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-sm font-bold text-emerald-700">
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[var(--color-success-bg)] text-sm font-bold text-[var(--color-success)] ring-1 ring-[var(--color-success-border)]">
               {i + 1}
             </div>
             <div>
-              <h2 className="flex items-center gap-2 text-sm font-semibold text-slate-900">
-                <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+              <h2 className="flex items-center gap-2 text-sm font-semibold text-[var(--color-foreground)]">
+                <CheckCircle2 className="h-4 w-4 text-[var(--color-success)]" aria-hidden="true" />
                 {item.title}
               </h2>
-              <p className="mt-1 text-sm text-slate-600">{item.description}</p>
+              <p className="mt-1 text-sm text-[var(--color-muted-foreground)]">{item.description}</p>
             </div>
           </div>
         ))}
@@ -51,9 +51,9 @@ export function WrapUp() {
       <button
         type="button"
         onClick={() => navigate('/dashboard')}
-        className="mt-10 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-semibold text-white hover:bg-blue-700"
+        className="btn-primary mt-10 px-6 py-3"
       >
-        <RotateCcw className="h-4 w-4" />
+        <RotateCcw className="h-4 w-4" aria-hidden="true" />
         Restart Walkthrough
       </button>
     </div>

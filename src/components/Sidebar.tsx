@@ -1,53 +1,48 @@
 import { NavLink } from 'react-router-dom';
-import {
-  LayoutDashboard,
-  Library,
-  FileSpreadsheet,
-  Activity,
-  Receipt,
-} from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
+import { usePersona } from '../context/PersonaContext';
+import type { Persona } from '../data/personas';
 
-const navItems = [
-  { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { to: '/catalog', label: 'Catalog', icon: Library },
-  { to: '/cue-sheets', label: 'Cue Sheets', icon: FileSpreadsheet },
-  { to: '/activity', label: 'Activity', icon: Activity },
-  { to: '/royalty', label: 'Royalty Statements', icon: Receipt },
-];
+function NavIcon({ name }: { name: Persona['navItems'][number]['icon'] }) {
+  const Icon = LucideIcons[name] as LucideIcons.LucideIcon;
+  return <Icon className="h-[1.125rem] w-[1.125rem] shrink-0" strokeWidth={1.75} aria-hidden="true" />;
+}
 
 export function Sidebar() {
+  const { currentPersona } = usePersona();
+
   return (
-    <aside className="flex w-60 shrink-0 flex-col border-r border-slate-200 bg-white">
-      <div className="flex h-16 items-center border-b border-slate-200 px-5">
-        <div className="flex items-center gap-2">
-          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-blue-600 text-sm font-bold text-white">
+    <aside className="flex w-60 shrink-0 flex-col border-r border-[var(--color-border)] bg-[var(--color-card)]">
+      <div className="flex h-14 items-center border-b border-[var(--color-border)] px-5">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[var(--color-primary)] text-sm font-bold text-[var(--color-on-primary)] shadow-[var(--shadow-sm)]">
             A
           </div>
-          <span className="text-lg font-semibold tracking-tight text-slate-900">
+          <span className="text-lg font-semibold tracking-tight text-[var(--color-foreground)]">
             ARIA
           </span>
         </div>
       </div>
-      <nav className="flex-1 space-y-1 p-3">
-        {navItems.map(({ to, label, icon: Icon }) => (
+      <nav className="flex-1 space-y-0.5 p-2">
+        {currentPersona.navItems.map(({ to, label, icon }) => (
           <NavLink
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+              `flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ring)] ${
                 isActive
-                  ? 'bg-blue-50 text-blue-700'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
+                  ? 'bg-[var(--color-info-bg)] text-[var(--color-primary)]'
+                  : 'text-[var(--color-muted-foreground)] hover:bg-[var(--color-muted)] hover:text-[var(--color-foreground)]'
               }`
             }
           >
-            <Icon className="h-5 w-5 shrink-0" />
+            <NavIcon name={icon} />
             {label}
           </NavLink>
         ))}
       </nav>
-      <div className="border-t border-slate-200 p-4">
-        <p className="text-xs text-slate-400">ARIA Rebuild POC</p>
+      <div className="border-t border-[var(--color-border)] p-4">
+        <p className="text-xs text-[var(--color-muted-foreground)]">ARIA Rebuild POC</p>
       </div>
     </aside>
   );

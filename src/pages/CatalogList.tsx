@@ -15,23 +15,23 @@ export function CatalogList() {
   return (
     <div>
       <div className="mb-6 flex items-center justify-between">
-        <h1 className="text-2xl font-semibold text-slate-900">Catalog</h1>
-        <button
-          type="button"
-          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-700"
-        >
-          <Plus className="h-4 w-4" />
+        <h1 className="page-title">Catalog</h1>
+        <button type="button" className="btn-primary">
+          <Plus className="h-4 w-4" aria-hidden="true" />
           Add Title
         </button>
       </div>
 
       <div className="mb-4 flex items-center gap-3">
-        <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+        <div className="relative max-w-md flex-1">
+          <Search
+            className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-muted-foreground)]"
+            aria-hidden="true"
+          />
           <input
             type="text"
             placeholder="Search by title, writer, or publisher…"
-            className="w-full rounded-lg border border-slate-300 py-2 pl-10 pr-4 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+            className="input input-with-icon"
           />
         </div>
       </div>
@@ -39,20 +39,16 @@ export function CatalogList() {
       <div className="mb-4 flex flex-wrap gap-2">
         {filterChips.map(({ label, options }) =>
           options.map((opt) => (
-            <button
-              key={`${label}-${opt}`}
-              type="button"
-              className="rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-600 hover:border-slate-300 hover:bg-slate-50"
-            >
+            <button key={`${label}-${opt}`} type="button" className="filter-chip">
               {label}: {opt}
             </button>
           )),
         )}
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-        <table className="min-w-full divide-y divide-slate-200">
-          <thead className="bg-slate-50">
+      <div className="table-shell">
+        <table>
+          <thead>
             <tr>
               {[
                 'Title',
@@ -62,16 +58,13 @@ export function CatalogList() {
                 'PRO',
                 'Registration Status',
               ].map((col) => (
-                <th
-                  key={col}
-                  className="cursor-pointer px-4 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-500 hover:text-slate-700"
-                >
+                <th key={col} className="sortable">
                   {col}
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-slate-100">
+          <tbody>
             {catalogTitles.map((row) => (
               <tr
                 key={row.id}
@@ -80,24 +73,16 @@ export function CatalogList() {
                     navigate('/catalog/supreme-guidance');
                   }
                 }}
-                className={`cursor-pointer transition-colors hover:bg-blue-50/50 ${
-                  row.highlighted ? 'bg-amber-50/60 ring-1 ring-inset ring-amber-200' : ''
+                className={`${row.id === 'supreme-guidance' ? 'table-row-interactive' : ''} ${
+                  row.highlighted ? 'table-row-highlight' : ''
                 }`}
               >
-                <td className="px-4 py-3 text-sm font-medium text-slate-900">
-                  {row.title}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.writers}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.publishers}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">
-                  {row.prefix}
-                </td>
-                <td className="px-4 py-3 text-sm text-slate-600">{row.pro}</td>
-                <td className="px-4 py-3">
+                <td className="font-medium text-[var(--color-foreground)]">{row.title}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.writers}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.publishers}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.prefix}</td>
+                <td className="text-[var(--color-muted-foreground)]">{row.pro}</td>
+                <td>
                   <StatusPill status={row.status} />
                 </td>
               </tr>

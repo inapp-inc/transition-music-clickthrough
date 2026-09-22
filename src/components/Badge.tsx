@@ -5,11 +5,15 @@ interface BadgeProps {
 }
 
 const variants = {
-  default: 'bg-slate-100 text-slate-700',
-  success: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200',
-  warning: 'bg-amber-50 text-amber-700 ring-1 ring-amber-200',
-  primary: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200',
-  neutral: 'bg-slate-50 text-slate-600 ring-1 ring-slate-200',
+  default: 'bg-[var(--color-muted)] text-[var(--color-muted-foreground)]',
+  success:
+    'bg-[var(--color-success-bg)] text-[var(--color-success)] ring-1 ring-[var(--color-success-border)]',
+  warning:
+    'bg-[var(--color-warning-bg)] text-[var(--color-warning)] ring-1 ring-[var(--color-warning-border)]',
+  primary:
+    'bg-[var(--color-info-bg)] text-[var(--color-primary)] ring-1 ring-[var(--color-info-border)]',
+  neutral:
+    'bg-[var(--color-muted)] text-[var(--color-muted-foreground)] ring-1 ring-[var(--color-border)]',
 };
 
 export function Badge({
@@ -19,7 +23,7 @@ export function Badge({
 }: BadgeProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium ${variants[variant]} ${className}`}
+      className={`inline-flex items-center rounded-md px-2 py-0.5 text-xs font-medium leading-snug ${variants[variant]} ${className}`}
     >
       {children}
     </span>
